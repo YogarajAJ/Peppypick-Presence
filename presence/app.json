@@ -9,14 +9,18 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Presence needs access to your location to track check-ins and attendance accurately."
+      }
     },
     "android": {
       "package": "com.peppypick.presence",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/presence-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": ["ACCESS_FINE_LOCATION"]
     },
     "web": {
       "bundler": "metro",

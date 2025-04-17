@@ -9,7 +9,7 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { useAuthStore } from '../store/authStore';
 import Animated, {
   FadeIn,
@@ -28,7 +28,7 @@ export default function LoginScreen() {
   const handleLogin = async () => {
     setError('');
     setLoading(true);
-    
+
     try {
       const success = await login(email, password);
       if (success) {
@@ -44,60 +44,62 @@ export default function LoginScreen() {
   };
 
   return (
-    <ImageBackground
-      source={{ uri: 'https://images.unsplash.com/photo-1622737133809-d95047b9e673?q=80&w=1932&auto=format&fit=crop' }}
-      style={styles.background}
-    >
-      <View style={styles.overlay}>
-        <Animated.View 
-          entering={FadeIn.delay(200)}
-          style={styles.container}
-        >
-          <Animated.Text 
-            entering={FadeInUp.delay(400)}
-            style={styles.title}
+    <>
+      <Stack.Screen options={{ headerShown: false }} />
+      <ImageBackground
+        source={{ uri: 'https://images.unsplash.com/photo-1622737133809-d95047b9e673?q=80&w=1932&auto=format&fit=crop' }}
+        style={styles.background}
+      >
+        <View style={styles.overlay}>
+          <Animated.View
+            entering={FadeIn.delay(200)}
+            style={styles.container}
           >
-            Welcome Back
-          </Animated.Text>
-          
-          <Animated.View 
-            entering={FadeInDown.delay(600)}
-            style={styles.form}
-          >
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              placeholderTextColor="#999"
-              value={email}
-              onChangeText={setEmail}
-              autoCapitalize="none"
-              keyboardType="email-address"
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              placeholderTextColor="#999"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
-            {error ? <Text style={styles.error}>{error}</Text> : null}
-            <Pressable 
-              style={[styles.button, loading && styles.buttonDisabled]}
-              onPress={handleLogin}
-              disabled={loading}
+            <Animated.Text
+              entering={FadeInUp.delay(400)}
+              style={styles.title}
             >
-              {loading ? (
-                <ActivityIndicator color="#000" />
-              ) : (
-                <Text style={styles.buttonText}>Sign In</Text>
-              )}
-            </Pressable>
+              Presence
+            </Animated.Text>
+
+            <Animated.View
+              entering={FadeInDown.delay(600)}
+              style={styles.form}
+            >
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                placeholderTextColor="#999"
+                value={email}
+                onChangeText={setEmail}
+                autoCapitalize="none"
+                keyboardType="email-address"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                placeholderTextColor="#999"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+              />
+              {error ? <Text style={styles.error}>{error}</Text> : null}
+              <Pressable
+                style={[styles.button, loading && styles.buttonDisabled]}
+                onPress={handleLogin}
+                disabled={loading}
+              >
+                {loading ? (
+                  <ActivityIndicator color="#000" />
+                ) : (
+                  <Text style={styles.buttonText}>Sign In</Text>
+                )}
+              </Pressable>
+            </Animated.View>
           </Animated.View>
-        </Animated.View>
-      </View>
-    </ImageBackground>
-  );
+        </View>
+      </ImageBackground>
+    </>);
 }
 
 const styles = StyleSheet.create({

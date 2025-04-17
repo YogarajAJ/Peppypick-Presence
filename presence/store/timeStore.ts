@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { useAuthStore } from './authStore';
+import * as Location from 'expo-location';
 
 interface TimeEntry {
   id: string;
@@ -15,16 +16,17 @@ interface TimeState {
   punchOut: () => Promise<void>;
 }
 
-async function getCurrentPosition(): Promise<GeolocationPosition> {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) {
-      reject(new Error('Geolocation is not supported'));
-      return;
-    }
 
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
+export async function getCurrentPosition() {
+  const { status } = await Location.requestForegroundPermissionsAsync();
+  if (status !== 'granted') {
+    throw new Error('Permission to access location was denied');
+  }
+
+  const location = await Location.getCurrentPositionAsync({});
+  return location;
 }
+
 
 export const useTimeStore = create<TimeState>((set) => ({
   currentSession: null,
