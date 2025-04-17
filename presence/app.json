@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Presence",
-    "slug": "Presence",
+    "slug": "presence",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/presence-icon.png",
